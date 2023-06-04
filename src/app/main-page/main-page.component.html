@@ -1,0 +1,29 @@
+<app-main-header></app-main-header>
+<div class="main-page-div">
+    <div class="container">
+        <div class="display">
+            <div class="container-2">
+                <div class="title">
+                    {{displayTitle}}
+                </div>
+                <div class="sensors">
+                    <div class="air-temp">
+                        <p>Air temperature: &nbsp;</p>{{currentAirTemperature}}<p>°C</p>
+                    </div>
+                    <div class="air-hum">
+                        <p>Air humidity: &nbsp;</p>{{currentAirHumidity}}<p>%</p>
+                    </div>
+                    <div class="soil-moist">
+                        <p>Soil moisture: &nbsp;</p>{{currentSoilMoisture}}<p>%</p>
+                    </div>
+                </div>
+            </div>            
+        </div>
+        <div class="problems-div" *ngIf="!isDeviceConnected">
+            <p>Device is not connected!</p>
+        </div>
+        <div class="problems-div" *ngIf="!areSensorsWorkingProperly">
+            <p>Sensors don't work properly!</p>
+        </div>
+    </div>
+</div>
