@@ -1,0 +1,70 @@
+<app-main-header></app-main-header>
+<div class="admin-div">
+    <div class="container">
+        <div class="title">
+            <h2>{{title}}</h2>
+        </div>
+        <div class="users-div" *ngIf="!displayUserDevices">
+            <div class="users-title">
+                <p>{{usersTitle}}</p>
+            </div>
+            <div class="usrs">
+                <ul class="users">
+                    <li class="first-li">
+                        <div class="name">
+                            <p>Name</p>
+                        </div>
+                        <div class="surname">
+                            <p>Surname</p>
+                        </div>
+                        <div class="username">
+                            <p>Username</p>
+                        </div>
+                    </li>
+                    <li class="user" *ngFor="let user of users">
+                        <div class="name">
+                            <p>{{user.name}}</p>
+                        </div>
+                        <div class="surname">
+                            <p>{{user.surname}}</p>
+                        </div>
+                        <div class="username">
+                            <p>{{user.username}}</p>
+                        </div>
+                        <div class="ban-makeActive">
+                            <button (click)="makeUserActive(user.username)" *ngIf="user.status == 'BANNED'">Make
+                                active</button>
+                            <button (click)="banUser(user.username)" *ngIf="user.status == 'ACTIVE'">Ban</button>
+                        </div>
+                        <div class="devices">
+                            <button (click)="getUserDevices(user.username)">Devices</button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="user-devices" *ngIf="displayUserDevices">
+            <div class="devices-title">
+                {{adminService.displayedUserUsername}}'s devices
+            </div>
+            <div class="devices">
+                <ul class="users">
+                    <li class="first-li">
+                        <div class="name">
+                            <p>Serial number</p>
+                        </div>
+                    </li>
+                    <li class="user" *ngFor="let device of devices">
+                        <div class="name">
+                            <p>{{device.serialNumber}}</p>
+                        </div>
+                        <div class="data">
+                            <button
+                                (click)="goToDeviceData(this.adminService.displayedUserUsername, device.serialNumber)">Data</button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

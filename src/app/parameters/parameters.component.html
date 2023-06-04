@@ -1,0 +1,23 @@
+<app-main-header></app-main-header>
+<div class="params-div">
+    <div class="container">
+        <div class="params-form">
+            <div class="title">
+                {{parametersTitle}}
+            </div>
+            <form [formGroup]="changeParamsForm" (submit)="saveParameters()" class="form">
+                <div class="frequency">
+                    <label>Time frequency</label>
+                    <input formControlName="frequency" type="number">
+                </div>
+                <div class="irrigation-threshold">
+                    <label>Irrigation threshold</label>
+                    <input formControlName="irrigationThreshold" type="number">
+                </div>
+                <div class="submit">
+                    <button type="submit">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

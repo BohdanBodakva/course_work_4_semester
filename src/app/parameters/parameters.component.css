@@ -1,0 +1,17 @@
+.params-div{
+    display: flex;
+    justify-content: center;
+}
+
+.params-form{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    width: fit-content;
+    margin-top: 75px;
+}
+
+.title, .frequency, .irrigation-threshold, .submit{
+    display: flex;
+    justify-content: center;
+}

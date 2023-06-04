@@ -1,0 +1,46 @@
+<app-main-header></app-main-header>
+<div class="login-div">
+    <div class="container">
+        <div class="login">
+            <div class="title">
+                <p>{{title}}</p>
+            </div>
+            <form class="content" [formGroup]="signUpForm" (submit)="signUp()">
+                <div class="message">
+                    <p class="m" *ngIf="nameSurnameMessage">Name/Surname must be from 2 to 50 symbols</p>
+                    <p class="m" *ngIf="usernamePasswordMessage">Username/password must be from 5 to 60 symbols</p>
+                    <p class="m" *ngIf="authService.isUserExisting">User already exists</p>
+                </div>
+                <div class="name">
+                    <label>Your name</label>
+                    <input formControlName="name" type="text">
+                </div>
+                <div class="surname">
+                    <label>Your surname</label>
+                    <input formControlName="surname" type="text">
+                </div>
+                <div class="username">
+                    <label>Choose username</label>
+                    <input formControlName="username" type="text">
+                </div>
+                <div class="password">
+                    <label>Choose password</label>
+                    <input formControlName="password" type="password">
+                </div>
+                <div class="confirm-password">
+                    <div class="c-p">
+                        <label>Confirm password</label>
+                        <input formControlName="confirmPassword" type="password">
+                    </div>                    
+                    <p class="passwordNotConfirmed" *ngIf="!isPasswordConfirmed">Passwords don't match!</p>
+                </div>
+                <div class="submit">
+                    <button type="submit">Sign Up</button>
+                </div>
+            </form>
+            <div class="other">
+                <p>Already have an account? <a routerLink="/log-in">Log In</a></p>
+            </div>
+        </div>
+    </div>
+</div>
