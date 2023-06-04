@@ -20,7 +20,6 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserEntity implements UserDetails {
-
     @Id
     @Column(name = "username")
     private String username;

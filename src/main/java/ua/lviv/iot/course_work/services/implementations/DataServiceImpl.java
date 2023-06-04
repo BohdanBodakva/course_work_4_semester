@@ -26,7 +26,7 @@ public class DataServiceImpl implements DataService {
     private final ClearDataRepository clearDataRepository;
     private final DeviceRepository deviceRepository;
     private final UserRepository userRepository;
-    private final String ESP32IPAddress = "192.168.81.15";
+    private final String ESP32IPAddress = "192.168.1.101";
 
 
 
@@ -130,13 +130,41 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-    public String setESP32ParametersByDeviceSerialNumberAndUsername(String serialNumber,
+    public String setESP32ParametersByDeviceSerialNumberAndUsername(String username,
+                                                         String serialNumber,
                                                          int temperatureSensorDataTransferFrequencyInSeconds,
-                                                         int irrigationThreshold) {
+                                                         int irrigationThreshold) throws UserNotFoundException, DeviceNotFoundException {
+        userRepository.findUserEntityByUsernameAndStatusIsActive(username)
+                .orElseThrow(() -> new UserNotFoundException("Active user with username = " + username + " doesn't exist"));
+        deviceRepository.findDeviceEntityBySerialNumber(serialNumber)
+                .orElseThrow(() -> new DeviceNotFoundException("Device with serial number = " + serialNumber + " wasn't found"));
+
+        System.out.println("--------------------------------------------");
+
         RestTemplate restTemplate = new RestTemplate();
         String url = "http://" + ESP32IPAddress + "/set-parameters?frequency=" + temperatureSensorDataTransferFrequencyInSeconds
                 + "&irrigationThreshold=" + irrigationThreshold;
-        return restTemplate.getForObject(url, String.class);
+        String s =  restTemplate.getForObject(url, String.class);
+        System.out.println(s);
+        return s;
+    }
+
+    @Override
+    public String postESP32SensorDataByDeviceSerialNumberAndUsername(String username, String serialNumber, SensorData data) throws UserNotFoundException, DeviceNotFoundException {
+        userRepository.findUserEntityByUsernameAndStatusIsActive(username)
+                .orElseThrow(() -> new UserNotFoundException("Active user with username = " + username + " doesn't exist"));
+        DeviceEntity device = deviceRepository.findDeviceEntityBySerialNumber(serialNumber)
+                .orElseThrow(() -> new DeviceNotFoundException("Device with serial number = " + serialNumber + " wasn't found"));
+
+        dataRepository.save(new DataEntity(
+                LocalDateTime.now(),
+                data.getAirTemperature(),
+                data.getAirHumidity(),
+                data.getSoilMoisture(),
+                device
+        ));
+
+        return "Data was saved";
     }
 
 

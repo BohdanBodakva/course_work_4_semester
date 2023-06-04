@@ -2,11 +2,13 @@ package ua.lviv.iot.course_work.services.implementations;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ua.lviv.iot.course_work.entities.DataEntity;
 import ua.lviv.iot.course_work.entities.DeviceEntity;
 import ua.lviv.iot.course_work.entities.UserEntity;
 import ua.lviv.iot.course_work.exceptions.DatabaseTableIsEmptyException;
 import ua.lviv.iot.course_work.exceptions.DeviceNotFoundException;
 import ua.lviv.iot.course_work.exceptions.UserNotFoundException;
+import ua.lviv.iot.course_work.repositories.DataRepository;
 import ua.lviv.iot.course_work.repositories.DeviceRepository;
 import ua.lviv.iot.course_work.repositories.UserRepository;
 import ua.lviv.iot.course_work.services.DeviceService;
@@ -18,6 +20,7 @@ import java.util.List;
 public class DeviceServiceImpl implements DeviceService {
     private final DeviceRepository deviceRepository;
     private final UserRepository userRepository;
+    private final DataRepository dataRepository;
 
     @Override
     public List<DeviceEntity> getAllDevices() {
@@ -25,7 +28,14 @@ public class DeviceServiceImpl implements DeviceService {
     }
 
     @Override
-    public DeviceEntity getDeviceBySerialNumber(String serialNumber) throws DeviceNotFoundException, DatabaseTableIsEmptyException {
+    public List<DataEntity> getDeviceDataByUsernameAndSerialNumber(String username, String serialNumber) throws UserNotFoundException {
+        userRepository.findUserEntityByUsernameAndStatusIsActive(username)
+                .orElseThrow(() -> new UserNotFoundException("Active user with username = " + username + " doesn't exist"));
+        return dataRepository.findDataEntitiesByDeviceSerialNumber(serialNumber);
+    }
+
+    @Override
+    public DeviceEntity getDevicesBySerialNumber(String serialNumber) throws DeviceNotFoundException, DatabaseTableIsEmptyException {
         deviceRepository.findDeviceEntityBySerialNumber(serialNumber)
                 .orElseThrow(() -> new DeviceNotFoundException("Device with serial number = " + serialNumber + " wasn't found"));
         return deviceRepository.findDeviceEntityBySerialNumber(serialNumber).
@@ -38,6 +48,13 @@ public class DeviceServiceImpl implements DeviceService {
                 .orElseThrow(() -> new UserNotFoundException("Active user with username = " + username + " doesn't exist"));
         device.setUser(user);
         return deviceRepository.save(device);
+    }
+
+    @Override
+    public List<DeviceEntity> getAllDevicesByUserUsername(String username) throws UserNotFoundException {
+        userRepository.findUserEntityByUsernameAndStatusIsActive(username)
+            .orElseThrow(() -> new UserNotFoundException("Active user with username = " + username + " doesn't exist"));
+        return deviceRepository.findDeviceEntitiesByUserUsername(username);
     }
 
     @Override

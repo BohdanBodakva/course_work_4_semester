@@ -1,5 +1,6 @@
 package ua.lviv.iot.course_work.services;
 
+import ua.lviv.iot.course_work.entities.DataEntity;
 import ua.lviv.iot.course_work.entities.DeviceEntity;
 import ua.lviv.iot.course_work.entities.UserEntity;
 import ua.lviv.iot.course_work.exceptions.DatabaseTableIsEmptyException;
@@ -10,7 +11,9 @@ import java.util.List;
 
 public interface DeviceService {
     List<DeviceEntity> getAllDevices();
-    DeviceEntity getDeviceBySerialNumber(String serialNumber) throws DeviceNotFoundException, DatabaseTableIsEmptyException;
+    List<DataEntity> getDeviceDataByUsernameAndSerialNumber(String username, String serialNumber) throws UserNotFoundException;
+    DeviceEntity getDevicesBySerialNumber(String serialNumber) throws DeviceNotFoundException, DatabaseTableIsEmptyException;
     DeviceEntity saveDeviceByUserUsername(String username, DeviceEntity device) throws UserNotFoundException;
+    List<DeviceEntity> getAllDevicesByUserUsername(String username) throws UserNotFoundException;
     void deleteDeviceBySerialNumberAndUsername(String username, String serialNumber) throws UserNotFoundException;
 }

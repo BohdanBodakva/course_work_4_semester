@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ua.lviv.iot.course_work.exceptions.UserNotFoundException;
 import ua.lviv.iot.course_work.services.ClearDataService;
+import ua.lviv.iot.course_work.services.DeviceService;
 import ua.lviv.iot.course_work.services.UserService;
 
 @RestController
@@ -15,6 +16,7 @@ import ua.lviv.iot.course_work.services.UserService;
 public class AdminController {
     private final UserService userService;
     private final ClearDataService clearDataService;
+    private final DeviceService deviceService;
 
     @GetMapping("/users")
     public ResponseEntity<?> getAllUsers(){
@@ -23,6 +25,38 @@ public class AdminController {
                 HttpStatus.OK
         );
     }
+
+    @GetMapping("/users/{username}/devices")
+    public ResponseEntity<?> getUserDevicesByUsername(@PathVariable(name = "username") String username){
+        try {
+            return new ResponseEntity<>(
+                    deviceService.getAllDevicesByUserUsername(username),
+                    HttpStatus.OK
+            );
+        } catch (UserNotFoundException e) {
+            return new ResponseEntity<>(
+                    e.getMessage(),
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+    }
+
+    @GetMapping("/users/{username}/devices/{serialNumber}/data")
+    public ResponseEntity<?> getDeviceDataByUsernameAndSerialNumber(@PathVariable(name = "username") String username,
+                                                                    @PathVariable(name = "serialNumber") String serialNumber){
+        try {
+            return new ResponseEntity<>(
+                    deviceService.getDeviceDataByUsernameAndSerialNumber(username, serialNumber),
+                    HttpStatus.OK
+            );
+        } catch (UserNotFoundException e) {
+            return new ResponseEntity<>(
+                    e.getMessage(),
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+    }
+
 
     @PostMapping("/users/{username}/ban")
     public ResponseEntity<?> banUserByUsername(@PathVariable(name = "username") String username){
@@ -66,13 +100,14 @@ public class AdminController {
         );
     }
 
-    @DeleteMapping("/clear-data")
-    public ResponseEntity<?> deleteAllClearData(){
-        clearDataService.deleteAllClearData();
-        return new ResponseEntity<>(
-                HttpStatus.OK
-        );
-    }
+//
+//    @DeleteMapping("/clear-data")
+//    public ResponseEntity<?> deleteAllClearData(){
+//        clearDataService.deleteAllClearData();
+//        return new ResponseEntity<>(
+//                HttpStatus.OK
+//        );
+//    }
 
 
 

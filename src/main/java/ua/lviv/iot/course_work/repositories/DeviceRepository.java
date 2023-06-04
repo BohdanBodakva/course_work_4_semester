@@ -14,6 +14,8 @@ public interface DeviceRepository extends JpaRepository<DeviceEntity, Integer> {
     Optional<DeviceEntity> findDeviceEntityBySerialNumber(String serialNumber);
     List<DeviceEntity> findDeviceEntitiesByUserUsername(String username);
 
-    @Query(nativeQuery = true, value = "delete from device_entity d where d.username=:username and d.serial_number=:serialNumber")
+    @Query(nativeQuery = true, value = "delete from device_entity d where d.username=:username and d.serial_number=:serialNumber;")
     void deleteDeviceEntityBySerialNumberAndUsername(@Param("username") String username, @Param("serialNumber") String serialNumber);
+
+//    List<DeviceEntity> findDeviceEntitiesByUserUsername(String username);
 }

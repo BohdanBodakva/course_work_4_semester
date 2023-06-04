@@ -11,19 +11,18 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import ua.lviv.iot.course_work.entities.UserEntity;
 import ua.lviv.iot.course_work.repositories.UserRepository;
 
 @Configuration
 @RequiredArgsConstructor
-public class AppConfig {
+public class AppConfiguration {
     private final UserRepository userRepository;
 
     @Bean
     public UserDetailsService userDetailsService(){
         return username -> userRepository.findUserEntityByUsername(username)
-                .orElseThrow(
-                        () -> new UsernameNotFoundException("User with email = " + username + " wasn't found")
-                );
+                .orElseThrow(() -> new UsernameNotFoundException("User with username = " + username + " wasn't found"));
     }
 
     @Bean

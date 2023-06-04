@@ -1,5 +1,6 @@
 package ua.lviv.iot.course_work.configuration;
 
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,19 +17,22 @@ import ua.lviv.iot.course_work.jwt.JwtAuthenticationFilter;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor
-public class SecurityConfig {
+public class SecurityConfiguration {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final AuthenticationProvider authenticationProvider;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .cors().and()
                 .csrf().disable()
                 .authorizeHttpRequests()
+                .requestMatchers("/api/users/bohdan/devices/device1/post-esp32-values")
+                .permitAll()
                 .requestMatchers("/api/admin/**")
                 .hasAuthority("ADMIN")
                 .requestMatchers("/api/users/**")
-                .hasAuthority("USER")
+                .hasAnyAuthority("USER", "ADMIN")
                 .requestMatchers("/api/auth/**")
                 .permitAll()
                 .anyRequest().authenticated()

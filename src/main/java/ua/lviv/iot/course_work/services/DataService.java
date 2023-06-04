@@ -25,8 +25,8 @@ public interface DataService {
 
     // ========================================================
 
-    String setESP32ParametersByDeviceSerialNumberAndUsername(String serialNumber, int temperatureSensorDataTransferFrequencyInSeconds, int irrigationThreshold);
+    String setESP32ParametersByDeviceSerialNumberAndUsername(String username, String serialNumber, int temperatureSensorDataTransferFrequencyInSeconds, int irrigationThreshold) throws UserNotFoundException, DeviceNotFoundException;
 
-
+    String postESP32SensorDataByDeviceSerialNumberAndUsername(String username, String serialNumber, SensorData data) throws UserNotFoundException, DeviceNotFoundException;
 
 }

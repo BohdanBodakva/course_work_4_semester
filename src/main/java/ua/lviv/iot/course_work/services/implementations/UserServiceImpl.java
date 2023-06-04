@@ -1,7 +1,6 @@
 package ua.lviv.iot.course_work.services.implementations;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.lviv.iot.course_work.entities.DeviceEntity;
 import ua.lviv.iot.course_work.entities.UserEntity;
@@ -15,6 +14,7 @@ import ua.lviv.iot.course_work.services.UserService;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +24,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserEntity> getAllUsers() {
-        return userRepository.findAll();
+        return userRepository.findAll()
+                .stream().filter(user -> user.getRole().name().equals("USER"))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -66,7 +68,8 @@ public class UserServiceImpl implements UserService {
 
         if(!Objects.equals(user.getPassword(), "")){
             userToUpdate.setPassword(
-                    new BCryptPasswordEncoder(12).encode(user.getPassword())
+//                    new BCryptPasswordEncoder(12).encode(user.getPassword())
+                    user.getPassword()
             );
         }
 
