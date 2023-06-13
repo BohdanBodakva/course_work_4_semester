@@ -2,22 +2,32 @@
 <div class="params-div">
     <div class="container">
         <div class="params-form">
-            <div class="title">
-                {{parametersTitle}}
+            <div class="frm">
+                <div class="title">
+                    {{parametersTitle}}
+                </div>
+                <form [formGroup]="changeParamsForm" (submit)="saveParameters()" class="form">
+                    <div class="a frequency">
+                        <label>Time frequency&nbsp;&nbsp;</label>
+                        <input formControlName="frequency" type="number">
+                        &nbsp;&nbsp;sec
+                    </div>
+                    <div class="a irrigation-threshold">
+                        <label>Irrigation threshold&nbsp;&nbsp;</label>
+                        <input formControlName="irrigationThreshold" type="number">
+                        &nbsp;&nbsp;%
+                    </div>
+                    <div class="submit">
+                        <button type="submit">Save</button>
+                    </div>
+                </form>
             </div>
-            <form [formGroup]="changeParamsForm" (submit)="saveParameters()" class="form">
-                <div class="frequency">
-                    <label>Time frequency</label>
-                    <input formControlName="frequency" type="number">
-                </div>
-                <div class="irrigation-threshold">
-                    <label>Irrigation threshold</label>
-                    <input formControlName="irrigationThreshold" type="number">
-                </div>
-                <div class="submit">
-                    <button type="submit">Save</button>
-                </div>
-            </form>
+        </div>
+        <div class="success" *ngIf="parametersWereSet && wereParametersSetSuccessfully">
+            <p>Parameters were set successfully</p>
+        </div>
+        <div class="problem" *ngIf="parametersWereSet && !wereParametersSetSuccessfully">
+            <p>There was a problem while setting parameters</p>
         </div>
     </div>
 </div>

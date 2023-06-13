@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Data } from '../entities/Data';
 import { DataServiceService } from '../services/data-service.service';
 import { AuthServiceService } from '../services/auth-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-main-page',
@@ -23,8 +24,10 @@ export class MainPageComponent implements OnInit, OnDestroy {
 
   private intervalId: any
 
-  constructor(private http: HttpClient, private dataService: DataServiceService, public authService: AuthServiceService) {
-
+  constructor(private router: Router, private http: HttpClient, private dataService: DataServiceService, public authService: AuthServiceService) {
+    if(localStorage.getItem("username") == null){
+      router.navigate(["/log-in"])
+    }
   }
 
   ngOnInit() {
@@ -55,7 +58,7 @@ export class MainPageComponent implements OnInit, OnDestroy {
 
         this.isDeviceConnected = true
 
-        if (Math.floor(new Date().getTime() - new Date(dateTime).getTime()) / 1000 > this.timeFrequency + 5) {
+        if (Math.floor(new Date().getTime() - new Date(dateTime).getTime()) / 1000 > Number(localStorage.getItem("timeFrequencyInSeconds_" + localStorage.getItem("chosenUserSerialNumber"))) + 8) {
           this.isDeviceConnected = false
 
           this.currentAirTemperature = 0

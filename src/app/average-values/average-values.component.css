@@ -1,0 +1,42 @@
+* {
+    font-size: 22px;
+}
+
+.avg-div {
+    display: flex;
+    justify-content: center;
+    padding-top: 40px;
+    background-image: url("D:/Downloads/pxfuel.jpg");
+    background-size: 1500px;
+    height: 658px;   
+}
+
+.container {
+    padding: 15px;
+}
+
+.values {
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    border: 1px solid black;
+    padding: 20px;
+    margin-top: 50px;
+    width: 260px;
+    height: 200px;
+    background-color: rgb(243, 243, 238);
+}
+
+.title {
+    margin-top: 15px;
+    margin-bottom: 38px;
+    display: flex;
+    justify-content: center;
+    font-weight: bolder;
+}
+
+.avg-val {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 8px;
+}

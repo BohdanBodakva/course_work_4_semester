@@ -1,6 +1,9 @@
 .login-div {
     display: flex;
     justify-content: center;
+    background-image: url("D:/Downloads/pxfuel.jpg");
+    background-size: 1500px;
+    height: 658px;    
 }
 
 .container {
@@ -17,6 +20,7 @@
     width: 350px;
     height: 490px;
     padding: 15px;
+    background-color: rgb(243, 243, 238);
 }
 
 .title {

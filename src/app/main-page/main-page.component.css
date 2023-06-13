@@ -4,10 +4,17 @@
     margin: 0 auto;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 25px;
+    background-image: url("D:/Downloads/pxfuel.jpg");
+    background-size: 1500px;
+    height: 658px;  
 }
 
 .container {
     padding: 15px;
+}
+
+.display{
+    background-color: rgb(243, 243, 238);
 }
 
 .problems-div {
@@ -16,6 +23,9 @@
     margin-top: 40px;
     color: red;
     font-weight: bold;
+    background-color: azure;
+    border-radius: 10px;
+    padding: 7px;
 }
 
 .title {

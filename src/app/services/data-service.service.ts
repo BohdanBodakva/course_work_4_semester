@@ -9,5 +9,7 @@ export class DataServiceService {
 
   currentDeviceSerialNumber: string = ""
 
+  selectedUserDeviceSerialNumber: string = ""
+
   constructor() { }
 }

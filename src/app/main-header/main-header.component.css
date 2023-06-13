@@ -9,9 +9,11 @@
 .navbar {
     background-color: rgb(122, 98, 94);
     padding: 20px;
+    padding-bottom: 18px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-bottom: 2px solid black;
 }
 
 .nav-items {
@@ -44,4 +46,40 @@ ul {
 .img {
     width: 80%;
     height: 80%;
+}
+
+.device-name {
+    color: white;
+    font-size: 30px;
+    /* margin-left: 5%; */
+}
+
+img{
+    width: 40px;
+}
+
+.usr-nm{
+    display: flex;
+    flex-direction: row;
+    color: white;
+}
+
+.usr-nm p{    
+    margin-left: 10px;
+}
+
+.username-device{
+    display: flex;
+    flex-direction: row;
+    margin-left: 12%;
+}
+
+.admin-username-device{
+    display: flex;
+    flex-direction: row;
+    margin-left: 12%;
+}
+
+.username-device p{
+    margin-top: 7px;
 }

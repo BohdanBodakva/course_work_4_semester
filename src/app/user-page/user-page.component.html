@@ -1,0 +1,56 @@
+<app-main-header></app-main-header>
+<div class="user-page">
+    <div class="container">
+        <div class="u-div">
+            <div class="header">
+                <div class="image">
+                    <img src="https://cdn-icons-png.flaticon.com/512/552/552721.png">
+                </div>
+                <div class="title">
+                    <p>{{currentUser.name}}&nbsp;&nbsp;{{currentUser.surname}}
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@{{currentUser.username}}</p>
+                </div>
+            </div>
+            <div class="ln">
+                <div class="line"></div>
+            </div>            
+            <div class="info">
+                <div class="devices">
+                    <div class="dev-title">
+                        <p>Devices</p>
+                    </div>
+                    <ul>
+                        <li class="device s">
+                            <p>Serial number</p>
+                        </li>
+                        <li class="device" *ngFor="let device of userDevices">
+                            <div class="name">
+                                <p>{{device.serialNumber}}</p>
+                            </div>
+                            <div class="data">
+                                <button (click)="selectDevice(device.serialNumber)">Data</button>&nbsp;&nbsp;
+                                <button class="d-d" (click)="goToParameters(device.serialNumber)">Parameters</button>
+                                <button (click)="deleteDevice(device.serialNumber)">Delete</button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="navigation">
+                    <div class="dvc">
+                        <div class="add-device">
+                            <button class="d" routerLink="/add-device">Add device</button>
+                        </div>
+                    </div>
+                    <div class="usr">
+                        <div class="edit-info">
+                            <button class="d">Edit profile</button>
+                        </div>
+                        <div class="delete-account">
+                            <button class="d" (click)="deleteAccount()">Delete account</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

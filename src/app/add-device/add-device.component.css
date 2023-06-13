@@ -10,6 +10,7 @@
     background-image: url("D:/Downloads/pxfuel.jpg");
     background-size: 1500px;
     height: 658px;    
+
 }
 
 .params-form{
@@ -18,17 +19,12 @@
     margin-bottom: 50px;
 }
 
-button{
-    padding: 7px;
-    border-radius: 5px;
-}
-
 .frm{
     border: 1px solid black;
     width: fit-content;
     margin-top: 75px;
     padding: 25px;
-    border-radius: 10px;
+    border-radius: 4px;
     background-color: rgb(243, 243, 238);
 }
 
@@ -57,6 +53,11 @@ button{
     margin-bottom: 18px;
 }
 
+button{
+    padding: 7px;
+    border-radius: 5px;
+}
+
 input{
     width: 75px;
 }
@@ -65,10 +66,10 @@ input{
     display: flex;
     justify-content: center;
     color: green;
-    font-weight: bolder;        
+    font-weight: bolder;
     background-color: azure;
     border-radius: 10px;
-    padding: 7px;
+    padding: 4px;
 }
 
 .problem{

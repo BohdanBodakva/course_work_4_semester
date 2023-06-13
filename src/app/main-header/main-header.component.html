@@ -2,10 +2,28 @@
     <div class="logo">
         <p>{{title}}</p>
     </div>
+    <div class="username-device" *ngIf="username != null && username != 'admin'">
+        <div class="usr-nm">
+            <img src="https://wofford.edu/wofford.edu/images/site/home/2022/user.png">
+            <p>@{{username}}&nbsp;&nbsp;:&nbsp;&nbsp;</p>
+        </div>
+        <div class="device-name" *ngIf="username !== null && username != 'admin'">
+            <p>{{currentDeviceSerialNumber}}</p>
+        </div>
+    </div>
+    <!-- <div class="admin-username-device" *ngIf="username == 'admin' && chosenUsername != null">
+        <div class="usr-nm">
+            <p><b>User</b>&nbsp;&nbsp;:&nbsp;&nbsp;@{{chosenUsername}}&nbsp;&nbsp;:&nbsp;&nbsp;</p>
+        </div>
+        <div class="device-name" *ngIf="username !== null && username != 'admin'">
+            <p>{{chosenUserSerialNumber}}</p>
+        </div>
+    </div> -->
     <ul class="nav-items" *ngIf="username !== null && username != 'admin'">
-        <li><a href="/">Home</a></li>
-        <li><a href="/history">History</a></li>
-        <li><a href="/average-values">Average values</a></li>
+        <li><a href="/" *ngIf="username !== '' && username !== 'admin'">Home</a></li>
+        <li><a href="/user" *ngIf="username !== '' && username !== 'admin'">User</a></li>
+        <li><a href="/history" *ngIf="username !== '' && username !== 'admin'">History</a></li>
+        <li><a href="/average-values" *ngIf="username !== '' && username !== 'admin'">Average values</a></li>
         <li><a (click)="authService.logout()">LogOut</a></li>
     </ul>
     <ul class="nav-items" *ngIf="username !== null && username == 'admin'">

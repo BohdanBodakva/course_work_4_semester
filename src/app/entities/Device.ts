@@ -1,9 +1,11 @@
+import { User } from "./User"
+
 export class Device{
     serialNumber: string
-    username: string
+    user: any
 
-    constructor(serialNumber: string, username: string){
+    constructor(serialNumber: string, user = new User("", "", "", "", "ACTIVE")){
         this.serialNumber = serialNumber
-        this.username = username
+        this.user = user
     }
 }

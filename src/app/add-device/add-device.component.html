@@ -1,0 +1,24 @@
+<app-main-header></app-main-header>
+<div class="params-div">
+    <div class="container">
+        <div class="params-form">
+            <div class="frm">
+                <div class="title">
+                    {{addDeviceTitle}}
+                </div>
+                <form [formGroup]="addDeviceForm" (submit)="saveParameters()" class="form">
+                    <div class="a frequency">
+                        <label>Serial number&nbsp;&nbsp;</label>
+                        <input formControlName="serialNumber" type="text">
+                    </div>
+                    <div class="submit">
+                        <button type="submit">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="problem" *ngIf="isProblemMessageDisplaying">
+            <p>This serial number already exists</p>
+        </div>
+    </div>
+</div>

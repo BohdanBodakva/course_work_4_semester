@@ -15,6 +15,8 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { LogInComponent } from './log-in/log-in.component';
 import { RouterModule } from '@angular/router';
 import { AdminPageComponent } from './admin-page/admin-page.component';
+import { UserPageComponent } from './user-page/user-page.component';
+import { AddDeviceComponent } from './add-device/add-device.component';
 
 
 @NgModule({
@@ -29,7 +31,9 @@ import { AdminPageComponent } from './admin-page/admin-page.component';
     AverageValuesComponent,
     SignUpComponent,
     LogInComponent,
-    AdminPageComponent
+    AdminPageComponent,
+    UserPageComponent,
+    AddDeviceComponent
   ],
   imports: [
     BrowserModule,

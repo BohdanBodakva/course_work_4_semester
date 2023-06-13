@@ -1,0 +1,89 @@
+* {
+    font-size: large;
+}
+
+.user-logged {
+    display: flex;
+    justify-content: center;
+    background-image: url("D:/Downloads/pxfuel.jpg");
+    background-size: 1500px;
+    height: 658px;    
+}
+
+.container {
+    padding: 35px;
+    padding-top: 40px;
+    padding-bottom: 0;
+}
+
+.block {
+    padding: 15px;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: rgb(243, 243, 238);
+}
+
+ul {
+    height: 435px;
+}
+
+.first-li {
+    margin-bottom: 8px;
+    font-weight: bolder;
+}
+
+li {
+    display: flex;
+    flex-direction: row;
+}
+
+.date,
+.time,
+.airTemp,
+.airHum,
+.soilMoist {
+    margin-right: 15px;
+    width: 170px;
+    display: flex;
+    justify-content: center;
+}
+
+.navigation {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 25px;
+    margin-top: 10px;
+}
+
+label {
+    margin-right: 15px;
+    margin-top: 7px;
+    font-weight: bolder;
+}
+
+.sort {
+    width: 70%;
+    display: flex;
+    justify-content: center;
+}
+
+.delete-all-data {
+    width: 30%;
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    border-radius: 4px;
+    padding: 5px;
+}
+
+.asc-desc {
+    margin-left: 15px;
+    width: 80px;
+}
+
+.delete-all-data-button {
+    background-color: red;
+    color: white;
+}

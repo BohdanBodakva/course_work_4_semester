@@ -9,6 +9,8 @@ import { AverageValuesComponent } from './average-values/average-values.componen
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { LogInComponent } from './log-in/log-in.component';
 import { AdminPageComponent } from './admin-page/admin-page.component';
+import { UserPageComponent } from './user-page/user-page.component';
+import { AddDeviceComponent } from './add-device/add-device.component';
 
 const routes: Routes = [
   { path: "", component: MainPageComponent },
@@ -18,7 +20,9 @@ const routes: Routes = [
   { path: "average-values", component: AverageValuesComponent },
   { path: "sign-up", component: SignUpComponent },
   { path: "log-in", component: LogInComponent },
+  { path: "user", component: UserPageComponent },
   { path: "admin", component: AdminPageComponent },
+  { path: "add-device", component: AddDeviceComponent },
   { path: "**", component: PageNotFoundComponent }
 ];
 

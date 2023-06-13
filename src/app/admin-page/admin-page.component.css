@@ -6,16 +6,33 @@ h2 {
     font-size: 24px;
 }
 
+.admin-div {
+    background-image: url("D:/Downloads/pxfuel.jpg");
+    background-size: 1500px;
+    height: 658px;
+}
+
 .container {
+    margin-top: 30px;
     display: flex;
     flex-direction: column;
     padding: 25px;
+}
+
+.a-t {
+    display: flex;
+    justify-content: center;
+    width: 100%;
 }
 
 .title {
     display: flex;
     justify-content: center;
     margin-bottom: 40px;
+    background-color: rgb(243, 243, 238);
+    padding: 10px;
+    border-radius: 10px;
+    width: 200px;
 }
 
 .users-title {
@@ -30,12 +47,28 @@ h2 {
     justify-content: center;
 }
 
+.users {
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 25px;
+    max-height: 250px;
+    background-color: rgb(243, 243, 238);
+}
+
 .users-div {
     display: flex;
     flex-direction: column;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 25px;
+    width: fit-content;
+    background-color: rgb(243, 243, 238);
 }
 
-ul {}
+.center {
+    display: flex;
+    justify-content: center;
+}
 
 li {
     width: fit-content;
@@ -69,4 +102,32 @@ li {
 
 button {
     width: 130px;
+}
+
+.user-devices {
+    display: flex;
+    justify-content: center;
+}
+
+.devices-title {
+    display: flex;
+    flex-direction: column;
+    font-weight: bolder;
+    margin-bottom: 25px;
+}
+
+.ttl,
+.back {
+    display: flex;
+    justify-content: center;
+}
+
+.ttl {
+    background-color: rgb(243, 243, 238);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.back {
+    margin-top: 25px;
 }

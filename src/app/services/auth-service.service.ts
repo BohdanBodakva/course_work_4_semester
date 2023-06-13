@@ -10,12 +10,11 @@ import { Router } from "@angular/router"
 export class AuthServiceService {
 
   getAuthHeader() {
-    return new HttpHeaders({
-      'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': '*',
-      'Access-Control-Allow-Headers': '*'
-    })
+    return new HttpHeaders()
+      .set('Authorization', 'Bearer ' + localStorage.getItem('jwt'))
+      .set('Access-Control-Allow-Origin', '*')
+      .set('Access-Control-Allow-Methods', '*')
+      .set('Access-Control-Allow-Headers', '*')
   }
 
   isUserExisting = false
@@ -34,10 +33,13 @@ export class AuthServiceService {
 
       console.log(localStorage.getItem('username'))
 
+      // localStorage.setItem("timeFrequencyInSeconds", "3")
+      // localStorage.setItem("irrigationThresholdInPercent", "50")
+
       if (localStorage.getItem('username') === 'admin') {
         this.router.navigate(['admin'])
       } else {
-        this.router.navigate([''])
+        this.router.navigate(['user'])
       }
 
     },
@@ -57,7 +59,10 @@ export class AuthServiceService {
 
       console.log(result)
 
-      this.router.navigate([''])
+      // localStorage.setItem("timeFrequencyInSeconds", "3")
+      // localStorage.setItem("irrigationThresholdInPercent", "50")
+
+      this.router.navigate(['user'])
     },
       error => {
         console.log(error)
@@ -68,6 +73,8 @@ export class AuthServiceService {
   }
 
   public logout() {
+    localStorage.removeItem("chosenUserSerialNumber")
+
     localStorage.removeItem("jwt")
     localStorage.removeItem("username")
 

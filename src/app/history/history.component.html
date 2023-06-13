@@ -1,11 +1,75 @@
 <app-main-header></app-main-header>
 <div>
-    <!-- <ul>
-        <li *ngFor="let data of allData">
-            {{data.dateTime}} {{data.airTemperature}} {{data.airHumidity}} {{data.soilMoisture}}
-        </li>
-    </ul> -->
-    <div *ngIf="isAdminLoggedIn">
-        dsfdsfsdfasdasdd
+    <div class="user-logged">
+        <div class="container">
+            <div class="block">
+                <div class="navigation">
+                    <div class="sort">
+                        <label>Sort by</label>
+                        <select name="sort-by" #sortByParam (change)="changeSortParam(sortByParam.value)">
+                            <option value="sort-by-nothing" [value]="''"></option>
+                            <option value="sort-by-date" [value]="'dateTime'">Date</option>
+                            <option value="sort-by-air-temp" [value]="'airTemp'">Air temperature</option>
+                            <option value="sort-by-air-hum" [value]="'airHum'">Air humidity</option>
+                            <option value="sort-by-soil-moist" [value]="'soilMoist'">Soil moisture</option>
+                        </select>
+                        <button class="asc-desc" (click)="changeSortOrder()">{{sortOrderASC ? 'ASC' : 'DESC'}}</button>
+                    </div>
+                    <div class="delete-all-data">
+                        <button *ngIf="!isAdminLoggedIn" class="delete-all-data-button" (click)="deleteAllData()">Delete history</button>
+                    </div>
+                </div>
+                <li class="first-li">
+                    <div class="date">
+                        <p>Date</p>
+                    </div>
+                    <div class="time">
+                        <p>Time</p>
+                    </div>
+                    <div class="airTemp">
+                        <p>Air temperature</p>
+                    </div>
+                    <div class="airHum">
+                        <p>Air humidity</p>
+                    </div>
+                    <div class="soilMoist">
+                        <p>Soil moisture</p>
+                    </div>
+                </li>
+                <ul>
+                    <li *ngFor="let data of sortedData">
+                        <div class="date">
+                            <p>
+                                {{makeDateFromString(data.dateTime).getDay() < 10 ? "0" +
+                                    makeDateFromString(data.dateTime).getDay() :
+                                    makeDateFromString(data.dateTime).getDay()}}&nbsp;
+                                    {{makeDateFromString(data.dateTime).getMonth() < 10 ? "0" +
+                                    makeDateFromString(data.dateTime).getMonth() :
+                                    makeDateFromString(data.dateTime).getMonth()}}&nbsp;
+                                    {{makeDateFromString(data.dateTime).getFullYear()}} </p>
+                        </div>
+                        <div class="time">
+                            <p>
+                                {{makeDateFromString(data.dateTime).getHours() < 10 ? "0" +
+                                    makeDateFromString(data.dateTime).getHours() :
+                                    makeDateFromString(data.dateTime).getHours()}}:{{makeDateFromString(data.dateTime).getMinutes()
+                                    < 10 ? "0" + makeDateFromString(data.dateTime).getMinutes() :
+                                    makeDateFromString(data.dateTime).getMinutes()}}:{{makeDateFromString(data.dateTime).getSeconds()
+                                    < 10 ? "0" + makeDateFromString(data.dateTime).getSeconds() :
+                                    makeDateFromString(data.dateTime).getSeconds()}} </p>
+                        </div>
+                        <div class="airTemp">
+                            <p>{{data.airTemperature}}&nbsp;°C</p>
+                        </div>
+                        <div class="airHum">
+                            <p>{{data.airHumidity}}&nbsp;%</p>
+                        </div>
+                        <div class="soilMoist">
+                            <p>{{data.soilMoisture}}&nbsp;%</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
 </div>

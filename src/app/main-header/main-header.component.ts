@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthServiceService } from '../services/auth-service.service';
+import { DataServiceService } from '../services/data-service.service';
 
 @Component({
   selector: 'app-main-header',
@@ -11,8 +12,23 @@ export class MainHeaderComponent {
 
   username: any
 
-  constructor(public authService: AuthServiceService) {
-    this.username = localStorage.getItem('username')
+  currentDeviceSerialNumber: any  
+
+  currentUsername: any
+
+  chosenUsername: any
+  chosenUserSerialNumber: any
+
+  constructor(public authService: AuthServiceService, public dataService: DataServiceService) {
+    this.username = localStorage.getItem("username")
+
+    if(this.username === "admin"){
+      this.chosenUsername = localStorage.getItem("chosenUser")
+      this.chosenUserSerialNumber = localStorage.getItem("chosenSerialNumber")
+    } else {
+      this.currentDeviceSerialNumber = localStorage.getItem('chosenUserSerialNumber')      
+    }
+    
   }
 
 

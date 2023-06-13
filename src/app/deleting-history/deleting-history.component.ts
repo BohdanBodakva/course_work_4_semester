@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DeletingData } from '../entities/DeletingData';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-deleting-history',
@@ -11,8 +12,10 @@ export class DeletingHistoryComponent implements OnInit {
 
   allDeletingData: DeletingData[] = []
 
-  constructor(private http: HttpClient){
-
+  constructor(private router: Router, private http: HttpClient){
+    if(localStorage.getItem("username") == null){
+      router.navigate(["/log-in"])
+    }
   }
 
   ngOnInit() {
