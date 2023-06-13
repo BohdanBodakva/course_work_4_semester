@@ -1,6 +1,8 @@
 package ua.lviv.iot.course_work.repositories;
 
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -14,8 +16,10 @@ public interface DeviceRepository extends JpaRepository<DeviceEntity, Integer> {
     Optional<DeviceEntity> findDeviceEntityBySerialNumber(String serialNumber);
     List<DeviceEntity> findDeviceEntitiesByUserUsername(String username);
 
-    @Query(nativeQuery = true, value = "delete from device_entity d where d.username=:username and d.serial_number=:serialNumber;")
-    void deleteDeviceEntityBySerialNumberAndUsername(@Param("username") String username, @Param("serialNumber") String serialNumber);
+    @Modifying
+    @Transactional
+    @Query(nativeQuery = true, value = "delete from device_entity d where d.serial_number=:serialNumber")
+    void deleteDeviceEntityBySerialNumberAndUsername(@Param("serialNumber") String serialNumber);
 
 //    List<DeviceEntity> findDeviceEntitiesByUserUsername(String username);
 }

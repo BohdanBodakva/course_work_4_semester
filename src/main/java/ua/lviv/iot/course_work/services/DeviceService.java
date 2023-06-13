@@ -11,6 +11,7 @@ import java.util.List;
 
 public interface DeviceService {
     List<DeviceEntity> getAllDevices();
+    List<DataEntity> getDeviceDataBySerialNumberOnly(String username, String serialNumber) throws UserNotFoundException, DeviceNotFoundException;
     List<DataEntity> getDeviceDataByUsernameAndSerialNumber(String username, String serialNumber) throws UserNotFoundException;
     DeviceEntity getDevicesBySerialNumber(String serialNumber) throws DeviceNotFoundException, DatabaseTableIsEmptyException;
     DeviceEntity saveDeviceByUserUsername(String username, DeviceEntity device) throws UserNotFoundException;

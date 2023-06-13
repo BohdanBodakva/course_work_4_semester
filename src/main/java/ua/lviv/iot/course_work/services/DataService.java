@@ -2,15 +2,16 @@ package ua.lviv.iot.course_work.services;
 
 import ua.lviv.iot.course_work.entities.DataEntity;
 import ua.lviv.iot.course_work.entities.SensorData;
+import ua.lviv.iot.course_work.entities.SetParameters;
 import ua.lviv.iot.course_work.exceptions.DatabaseTableIsEmptyException;
 import ua.lviv.iot.course_work.exceptions.DeviceNotFoundException;
 import ua.lviv.iot.course_work.exceptions.UserNotFoundException;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
 public interface DataService {
+//    AverageValues getAverageValues(String username, String serialNumber) throws UserNotFoundException, DeviceNotFoundException;
     List<DataEntity> getAllDataByDeviceSerialNumberAndUsername(String username, String serialNumber) throws DeviceNotFoundException, UserNotFoundException;
     List<DataEntity> getDataBetweenDatesBySerialNumberAndUsername(String username, String serialNumber, LocalDateTime firstDateTime, LocalDateTime secondDateTime) throws DeviceNotFoundException, UserNotFoundException;
     DataEntity saveDataBySerialNumberAndUsername(String username, String serialNumber, SensorData data) throws DeviceNotFoundException, UserNotFoundException;
@@ -25,7 +26,7 @@ public interface DataService {
 
     // ========================================================
 
-    String setESP32ParametersByDeviceSerialNumberAndUsername(String username, String serialNumber, int temperatureSensorDataTransferFrequencyInSeconds, int irrigationThreshold) throws UserNotFoundException, DeviceNotFoundException;
+    SetParameters setESP32ParametersByDeviceSerialNumberAndUsername(String username, String serialNumber, int temperatureSensorDataTransferFrequencyInSeconds, int irrigationThreshold) throws UserNotFoundException, DeviceNotFoundException;
 
     String postESP32SensorDataByDeviceSerialNumberAndUsername(String username, String serialNumber, SensorData data) throws UserNotFoundException, DeviceNotFoundException;
 

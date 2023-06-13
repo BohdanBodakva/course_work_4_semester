@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ua.lviv.iot.course_work.exceptions.DeviceNotFoundException;
 import ua.lviv.iot.course_work.exceptions.UserNotFoundException;
 import ua.lviv.iot.course_work.services.ClearDataService;
 import ua.lviv.iot.course_work.services.DeviceService;
@@ -46,10 +47,10 @@ public class AdminController {
                                                                     @PathVariable(name = "serialNumber") String serialNumber){
         try {
             return new ResponseEntity<>(
-                    deviceService.getDeviceDataByUsernameAndSerialNumber(username, serialNumber),
+                    deviceService.getDeviceDataBySerialNumberOnly(username, serialNumber),
                     HttpStatus.OK
             );
-        } catch (UserNotFoundException e) {
+        } catch (UserNotFoundException | DeviceNotFoundException e) {
             return new ResponseEntity<>(
                     e.getMessage(),
                     HttpStatus.BAD_REQUEST
@@ -63,6 +64,7 @@ public class AdminController {
         try {
             userService.banUserByUsername(username);
             return new ResponseEntity<>(
+                    "User has banned successfully",
                     HttpStatus.OK
             );
         } catch (UserNotFoundException e) {
@@ -78,7 +80,7 @@ public class AdminController {
         try {
             userService.makeUserActiveByUsername(username);
             return new ResponseEntity<>(
-                    userService.getAllUsers(),
+                    "User was made active successfully",
                     HttpStatus.OK
             );
         } catch (UserNotFoundException e) {

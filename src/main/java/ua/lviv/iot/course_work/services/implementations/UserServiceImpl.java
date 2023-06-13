@@ -86,7 +86,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void makeUserActiveByUsername(String username) throws UserNotFoundException {
-        UserEntity user =  userRepository.findUserEntityByUsernameAndStatusIsActive(username)
+        UserEntity user =  userRepository.findUserEntityByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException("Active user with username = " + username + " doesn't exist"));
         user.setStatus(UserStatus.ACTIVE);
         userRepository.save(user);

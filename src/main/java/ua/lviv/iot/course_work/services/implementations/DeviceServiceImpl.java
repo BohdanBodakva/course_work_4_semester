@@ -28,6 +28,15 @@ public class DeviceServiceImpl implements DeviceService {
     }
 
     @Override
+    public List<DataEntity> getDeviceDataBySerialNumberOnly(String username, String serialNumber) throws UserNotFoundException, DeviceNotFoundException {
+        userRepository.findUserEntityByUsernameAndStatusIsActive(username)
+                .orElseThrow(() -> new UserNotFoundException("Active user with username = " + username + " doesn't exist"));
+        deviceRepository.findDeviceEntityBySerialNumber(serialNumber)
+                .orElseThrow(() -> new DeviceNotFoundException("Device with serial number = " + serialNumber + " wasn't found"));
+        return dataRepository.findDataEntitiesByDeviceSerialNumber(serialNumber);
+    }
+
+    @Override
     public List<DataEntity> getDeviceDataByUsernameAndSerialNumber(String username, String serialNumber) throws UserNotFoundException {
         userRepository.findUserEntityByUsernameAndStatusIsActive(username)
                 .orElseThrow(() -> new UserNotFoundException("Active user with username = " + username + " doesn't exist"));
@@ -47,6 +56,7 @@ public class DeviceServiceImpl implements DeviceService {
         UserEntity user =  userRepository.findUserEntityByUsernameAndStatusIsActive(username)
                 .orElseThrow(() -> new UserNotFoundException("Active user with username = " + username + " doesn't exist"));
         device.setUser(user);
+        System.out.println(device);
         return deviceRepository.save(device);
     }
 
@@ -61,6 +71,6 @@ public class DeviceServiceImpl implements DeviceService {
     public void deleteDeviceBySerialNumberAndUsername(String username, String serialNumber) throws UserNotFoundException {
         userRepository.findUserEntityByUsernameAndStatusIsActive(username)
                 .orElseThrow(() -> new UserNotFoundException("Active user with username = " + username + " doesn't exist"));
-        deviceRepository.deleteDeviceEntityBySerialNumberAndUsername(username, serialNumber);
+        deviceRepository.deleteDeviceEntityBySerialNumberAndUsername(serialNumber);
     }
 }

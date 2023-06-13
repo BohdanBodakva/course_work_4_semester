@@ -3,10 +3,7 @@ package ua.lviv.iot.course_work.services.implementations;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import ua.lviv.iot.course_work.entities.ClearDataEntity;
-import ua.lviv.iot.course_work.entities.DataEntity;
-import ua.lviv.iot.course_work.entities.DeviceEntity;
-import ua.lviv.iot.course_work.entities.SensorData;
+import ua.lviv.iot.course_work.entities.*;
 import ua.lviv.iot.course_work.exceptions.DatabaseTableIsEmptyException;
 import ua.lviv.iot.course_work.exceptions.DeviceNotFoundException;
 import ua.lviv.iot.course_work.exceptions.UserNotFoundException;
@@ -18,6 +15,7 @@ import ua.lviv.iot.course_work.services.DataService;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -26,10 +24,21 @@ public class DataServiceImpl implements DataService {
     private final ClearDataRepository clearDataRepository;
     private final DeviceRepository deviceRepository;
     private final UserRepository userRepository;
-    private final String ESP32IPAddress = "192.168.1.101";
+    private final String ESP32IPAddress = "192.168.1.102";
 
 
-
+//    @Override
+//    public AverageValues getAverageValues(String username, String serialNumber) throws UserNotFoundException, DeviceNotFoundException {
+//        userRepository.findUserEntityByUsernameAndStatusIsActive(username)
+//                .orElseThrow(() -> new UserNotFoundException("Active user with username = " + username + " doesn't exist"));
+//        deviceRepository.findDeviceEntityBySerialNumber(serialNumber)
+//                .orElseThrow(() -> new DeviceNotFoundException("Device with serial number = " + serialNumber + " wasn't found"));
+//        if(deviceRepository.findDeviceEntitiesByUserUsername(username).size() == 0){
+//            throw new DeviceNotFoundException("Device with serial number = " + serialNumber + " doesn't exist for user with username = " + username);
+//        }
+//        System.out.println(dataRepository.findAverageValues(serialNumber));
+//        return dataRepository.findAverageValues(serialNumber);
+//    }
 
     @Override
     public List<DataEntity> getAllDataByDeviceSerialNumberAndUsername(String username, String serialNumber) throws DeviceNotFoundException, UserNotFoundException {
@@ -37,6 +46,9 @@ public class DataServiceImpl implements DataService {
                 .orElseThrow(() -> new UserNotFoundException("Active user with username = " + username + " doesn't exist"));
         deviceRepository.findDeviceEntityBySerialNumber(serialNumber)
                 .orElseThrow(() -> new DeviceNotFoundException("Device with serial number = " + serialNumber + " wasn't found"));
+        if(deviceRepository.findDeviceEntitiesByUserUsername(username).size() == 0){
+            throw new DeviceNotFoundException("Device with serial number = " + serialNumber + " doesn't exist for user with username = " + username);
+        }
         return dataRepository.findDataEntitiesByDeviceSerialNumber(serialNumber);
     }
 
@@ -71,6 +83,9 @@ public class DataServiceImpl implements DataService {
                 .orElseThrow(() -> new UserNotFoundException("Active user with username = " + username + " doesn't exist"));
         deviceRepository.findDeviceEntityBySerialNumber(serialNumber)
                 .orElseThrow(() -> new DeviceNotFoundException("Device with serial number = " + serialNumber + " wasn't found"));
+        if(deviceRepository.findDeviceEntitiesByUserUsername(username).size() == 0){
+            throw new DeviceNotFoundException("Device with serial number = " + serialNumber + " doesn't exist for user with username = " + username);
+        }
         dataRepository.deleteDataEntityBySerialNumber(serialNumber);
     }
 
@@ -99,6 +114,14 @@ public class DataServiceImpl implements DataService {
                 .orElseThrow(() -> new UserNotFoundException("Active user with username = " + username + " doesn't exist"));
         deviceRepository.findDeviceEntityBySerialNumber(serialNumber)
                 .orElseThrow(() -> new DeviceNotFoundException("Device with serial number = " + serialNumber + " wasn't found"));
+
+        List<DeviceEntity> devices = deviceRepository.findDeviceEntitiesByUserUsername(username);
+        System.out.println(devices);
+        if(devices.stream().filter(device -> device.getSerialNumber().equals(serialNumber)).toList().size() == 0){
+            throw new DeviceNotFoundException("Device with serialNumber = " + serialNumber + " doesn't exist for user with username " + username);
+        }
+        System.out.println(devices.stream().filter(device -> device.getSerialNumber().equals(serialNumber)).toList().size());
+
         return dataRepository.findDataEntitiesBySerialNumberSortedByDateDESC(serialNumber);
     }
 
@@ -108,7 +131,14 @@ public class DataServiceImpl implements DataService {
                 .orElseThrow(() -> new UserNotFoundException("Active user with username = " + username + " doesn't exist"));
         deviceRepository.findDeviceEntityBySerialNumber(serialNumber)
                 .orElseThrow(() -> new DeviceNotFoundException("Device with serial number = " + serialNumber + " wasn't found"));
-        return dataRepository.findAverageAirTemperatureBySerialNumber(serialNumber);
+        if(deviceRepository.findDeviceEntitiesByUserUsername(username).size() == 0){
+            throw new DeviceNotFoundException("Device with serial number = " + serialNumber + " doesn't exist for user with username = " + username);
+        }
+        return dataRepository.findDataEntitiesByDeviceSerialNumber(serialNumber)
+                .stream()
+                .mapToDouble(DataEntity::getAirTemperature)
+                .average()
+                .orElse(-1);
     }
 
     @Override
@@ -126,11 +156,12 @@ public class DataServiceImpl implements DataService {
                 .orElseThrow(() -> new UserNotFoundException("Active user with username = " + username + " doesn't exist"));
         deviceRepository.findDeviceEntityBySerialNumber(serialNumber)
                 .orElseThrow(() -> new DeviceNotFoundException("Device with serial number = " + serialNumber + " wasn't found"));
+        System.out.println(dataRepository.findAverageSoilMoistureBySerialNumber(serialNumber));
         return dataRepository.findAverageSoilMoistureBySerialNumber(serialNumber);
     }
 
     @Override
-    public String setESP32ParametersByDeviceSerialNumberAndUsername(String username,
+    public SetParameters setESP32ParametersByDeviceSerialNumberAndUsername(String username,
                                                          String serialNumber,
                                                          int temperatureSensorDataTransferFrequencyInSeconds,
                                                          int irrigationThreshold) throws UserNotFoundException, DeviceNotFoundException {
@@ -146,7 +177,7 @@ public class DataServiceImpl implements DataService {
                 + "&irrigationThreshold=" + irrigationThreshold;
         String s =  restTemplate.getForObject(url, String.class);
         System.out.println(s);
-        return s;
+        return new SetParameters(s);
     }
 
     @Override

@@ -14,7 +14,6 @@ import java.util.Objects;
 @AllArgsConstructor
 public class DeviceEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "serial_number")
     private String serialNumber;
 
